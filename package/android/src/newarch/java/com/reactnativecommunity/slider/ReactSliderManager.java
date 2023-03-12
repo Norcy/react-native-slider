@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.common.MapBuilder;
+import com.facebook.react.uimanager.LayoutShadowNode;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.UIManagerHelper;
@@ -40,20 +42,10 @@ public class ReactSliderManager extends SimpleViewManager<ReactSlider> implement
           new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
-              ReactSlider slider = (ReactSlider)seekbar;
-
-              if(progress < slider.getLowerLimit()) {
-                progress = slider.getLowerLimit();
-                seekbar.setProgress(progress);
-              } else if (progress > slider.getUpperLimit()) {
-                progress = slider.getUpperLimit();
-                seekbar.setProgress(progress);
-              }
-
               ReactContext reactContext = (ReactContext) seekbar.getContext();
               int reactTag = seekbar.getId();
               UIManagerHelper.getEventDispatcherForReactTag(reactContext, reactTag)
-                      .dispatchEvent(new ReactSliderEvent(reactTag, slider.toRealProgress(progress), fromUser));
+                      .dispatchEvent(new ReactSliderEvent(reactTag, ((ReactSlider)seekbar).toRealProgress(progress), fromUser));
             }
 
             @Override
@@ -94,14 +86,24 @@ public class ReactSliderManager extends SimpleViewManager<ReactSlider> implement
   }
 
   @Override
+  public LayoutShadowNode createShadowNodeInstance() {
+    return new ReactSliderManagerImpl.ReactSliderShadowNode();
+  }
+
+  @Override
+  public Class getShadowNodeClass() {
+    return ReactSliderManagerImpl.ReactSliderShadowNode.class;
+  }
+
+  @Override
   protected ReactSlider createViewInstance(ThemedReactContext context) {
     return ReactSliderManagerImpl.createViewInstance(context);
   }
 
   @Override
-  @ReactProp(name = "disabled", defaultBoolean = false)
-  public void setDisabled(ReactSlider view, boolean disabled) {
-    ReactSliderManagerImpl.setDisabled(view, disabled);
+  @ReactProp(name = ViewProps.ENABLED, defaultBoolean = true)
+  public void setEnabled(ReactSlider view, boolean enabled) {
+    ReactSliderManagerImpl.setEnabled(view, enabled);
   }
 
   @Override
@@ -164,16 +166,6 @@ public class ReactSliderManager extends SimpleViewManager<ReactSlider> implement
     ReactSliderManagerImpl.setAccessibilityIncrements(view, accessibilityIncrements);
   }
 
-  @ReactProp(name = "lowerLimit")
-  public void setLowerLimit(ReactSlider view, float value) {
-    ReactSliderManagerImpl.setLowerLimit(view, value);
-  }
-
-  @ReactProp(name = "upperLimit")
-  public void setUpperLimit(ReactSlider view, float value) {
-    ReactSliderManagerImpl.setUpperLimit(view, value);
-  }
-
   @Override
   @ReactProp(name = "thumbImage")
   public void setThumbImage(ReactSlider view, @androidx.annotation.Nullable ReadableMap source) {
@@ -196,6 +188,10 @@ public class ReactSliderManager extends SimpleViewManager<ReactSlider> implement
   }
 
   // these props are not available on Android, however we must override their setters
+  @Override
+  @ReactProp(name = "disabled")
+  public void setDisabled(ReactSlider view, boolean disabled) {}
+
   @Override
   public void setMinimumTrackImage(ReactSlider view, @Nullable ReadableMap readableMap) {}
 

@@ -1,6 +1,6 @@
 {
-  "name": "@react-native-community/slider",
-  "version": "4.4.1",
+  "name": "@norcy/slider",
+  "version": "1.0.0",
   "license": "MIT",
   "author": "react-native-community",
   "homepage": "https://github.com/callstack/react-native-slider#readme",
@@ -48,7 +48,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/callstack/react-native-slider.git"
+    "url": "https://github.com/Norcy/react-native-slide.git"
   },
   "jest": {
     "preset": "react-native",

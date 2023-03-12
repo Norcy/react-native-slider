@@ -66,18 +66,6 @@ public class ReactSlider extends AppCompatSeekBar {
 
   private List<String> mAccessibilityIncrements;
 
-  /** Real limit value based on min and max values. This comes from props */
-  private double mRealLowerLimit = Long.MIN_VALUE;
-
-  /** Lower limit based on the SeekBar progress 0..total steps */
-  private int mLowerLimit;
-
-  /** Real limit value based on min and max values. This comes from props */
-  private double mRealUpperLimit = Long.MAX_VALUE;
-
-  /** Upper limit based on the SeekBar progress 0..total steps */
-  private int mUpperLimit;
-
   public ReactSlider(Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
     I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
@@ -112,24 +100,6 @@ public class ReactSlider extends AppCompatSeekBar {
   /* package */ void setStep(double step) {
     mStep = step;
     updateAll();
-  }
-
-  /* package */ void setLowerLimit(double value) {
-    mRealLowerLimit = value;
-    updateLowerLimit();
-  }
-
-  /* package */ void setUpperLimit(double value) {
-    mRealUpperLimit = value;
-    updateUpperLimit();
-  }
-
-  int getLowerLimit() {
-    return this.mLowerLimit;
-  }
-
-  int getUpperLimit() {
-    return this.mUpperLimit;
   }
 
   boolean isSliding() {
@@ -216,21 +186,7 @@ public class ReactSlider extends AppCompatSeekBar {
       mStepCalculated = (mMaxValue - mMinValue) / (double) DEFAULT_TOTAL_STEPS;
     }
     setMax(getTotalSteps());
-    updateLowerLimit();
-    updateUpperLimit();
     updateValue();
-  }
-
-  /** Update limit based on props limit, max and min */
-  private void updateLowerLimit() {
-    double limit = Math.max(mRealLowerLimit, mMinValue);
-    mLowerLimit = (int) Math.round((limit - mMinValue) / (mMaxValue - mMinValue) * getTotalSteps());
-  }
-
-  /** Update limit based on props limit, max and min */
-  private void updateUpperLimit() {
-    double limit = Math.min(mRealUpperLimit, mMaxValue);
-    mUpperLimit = (int) Math.round((limit - mMinValue) / (mMaxValue - mMinValue) * getTotalSteps());
   }
 
   /** Update value only (optimization in case only value is set). */

@@ -1,1 +1,0 @@
-{"version":3,"names":["RNCSlider","require","default"],"sources":["index.ts"],"sourcesContent":["// @flow\nconst RNCSlider = require('./RNCSliderNativeComponent').default;\n\nexport default RNCSlider;\n"],"mappings":"AACA,MAAMA,SAAS,GAAGC,OAAO,CAAC,4BAA4B,CAAC,CAACC,OAAO;AAE/D,eAAeF,SAAS"}

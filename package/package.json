@@ -10,11 +10,23 @@
   },
   "main": "lib/commonjs/index",
   "source": "src/index",
-  "types": "typings/index.d.ts",
+  "types": "lib/typescript/index.d.ts",
   "keywords": [
     "react-native",
     "react native",
     "slider"
+  ],
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
   ],
   "scripts": {
     "prepare": "bob build",
@@ -49,6 +61,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Norcy/react-native-slider.git"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn typescript"
+    }
   },
   "jest": {
     "preset": "react-native",

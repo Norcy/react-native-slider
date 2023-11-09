@@ -1,6 +1,6 @@
 {
   "name": "@norcy/slider",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "author": "react-native-community",
   "homepage": "https://github.com/callstack/react-native-slider#readme",
@@ -18,8 +18,7 @@
   "scripts": {
     "prepare": "babel --extensions \".ts,.tsx\" --out-dir dist src",
     "lint": "npx eslint src",
-    "test": "npx jest src",
-    "prepack": "npx copyfiles \"./../README.md\" ./README.md"
+    "test": "npx jest src"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

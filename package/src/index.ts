@@ -1,6 +1,7 @@
 import {Platform} from 'react-native';
-import RNCSliderNativeComponent from './Slider';
+import SlideriOS from './Slider';
+import SliderAndroid from './android/Slider';
 
-const RNCSlider = RNCSliderNativeComponent;
+const RNCSlider = Platform.OS === 'ios' ? SlideriOS : SliderAndroid;
 
 export default RNCSlider;

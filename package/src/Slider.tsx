@@ -63,7 +63,7 @@ type IOSProps = Readonly<{
   tapToSeek?: boolean;
 }>;
 
-type Props = ViewProps &
+export type SliderProps = ViewProps &
   IOSProps &
   WindowsProps &
   Readonly<{
@@ -189,7 +189,7 @@ type Props = ViewProps &
   }>;
 
 const SliderComponent = (
-  props: Props,
+  props: SliderProps,
   forwardedRef?: Ref<typeof RCTSliderNativeComponent>,
 ) => {
   const style = StyleSheet.compose(props.style, styles.slider);

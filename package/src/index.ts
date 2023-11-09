@@ -1,10 +1,11 @@
 import {Platform} from 'react-native';
+import RNCSliderNativeComponent from './RNCSliderNativeComponent';
+import AndroidRNCSliderNativeComponent from './android/RNCSliderNativeComponent';
+import {SliderProps} from './Slider';
 
-let RNCSlider = null;
-if (Platform.OS == 'ios') {
-  RNCSlider = require('./RNCSliderNativeComponent').default;
-} else {
-  RNCSlider = require('./android/index').default;
-}
+const RNCSlider: SliderProps =
+  Platform.OS == 'ios'
+    ? RNCSliderNativeComponent
+    : AndroidRNCSliderNativeComponent;
 
 export default RNCSlider;

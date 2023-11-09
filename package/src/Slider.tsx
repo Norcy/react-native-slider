@@ -10,7 +10,7 @@ import {
   NativeSyntheticEvent,
   StyleProp,
 } from 'react-native';
-import RCTSliderNativeComponent from './index';
+import RCTSliderNativeComponent from './RNCSliderNativeComponent';
 //@ts-ignore
 import type {ImageSource} from 'react-native/Libraries/Image/ImageSource';
 
@@ -206,7 +206,7 @@ const SliderComponent = (
     ? (event: Event) => {
         onValueChange(event.nativeEvent.value);
       }
-    : null;
+    : () => {};
 
   const _disabled =
     typeof props.disabled === 'boolean'
@@ -222,17 +222,17 @@ const SliderComponent = (
     ? (event: Event) => {
         onSlidingStart(event.nativeEvent.value);
       }
-    : null;
+    : () => {};
   const onSlidingCompleteEvent = onSlidingComplete
     ? (event: Event) => {
         onSlidingComplete(event.nativeEvent.value);
       }
-    : null;
+    : () => {};
   const onAccessibilityActionEvent = onAccessibilityAction
     ? (event: AccessibilityActionEvent) => {
         onAccessibilityAction(event);
       }
-    : null;
+    : () => {};
 
   const lowerLimit =
     !!localProps.lowerLimit || localProps.lowerLimit === 0
@@ -257,7 +257,7 @@ const SliderComponent = (
           ? Image.resolveAssetSource(props.thumbImage)
           : undefined
       }
-      ref={forwardedRef}
+      // ref={forwardedRef}
       style={style}
       onChange={onValueChangeEvent}
       onRNCSliderSlidingStart={onSlidingStartEvent}
@@ -266,7 +266,6 @@ const SliderComponent = (
       disabled={_disabled}
       onStartShouldSetResponder={() => true}
       onResponderTerminationRequest={() => false}
-      onRNCSliderAccessibilityAction={onAccessibilityActionEvent}
     />
   );
 };
